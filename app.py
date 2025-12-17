@@ -1,6 +1,8 @@
 import streamlit as st
 from groq import Groq
 import os
+st.write("GROQ_API_KEY present:", "GROQ_API_KEY" in os.environ)
+
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
 st.set_page_config(page_title="Twitter/X Thread Ghostwriter", layout="centered")
@@ -95,3 +97,4 @@ Write the Twitter thread now:
 
             st.subheader("Generated Thread")
             st.markdown(output)
+
