@@ -1,6 +1,74 @@
 import streamlit as st
 from groq import Groq
 import os
+st.markdown("""
+<style>
+body {
+    background-color: #f5f8fa;
+}
+
+.twitter-card {
+    background-color: white;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #e1e8ed;
+    margin-bottom: 12px;
+    font-family: Arial, sans-serif;
+}
+
+.tweet {
+    border-bottom: 1px solid #e1e8ed;
+    padding: 12px 0;
+}
+
+.tweet:last-child {
+    border-bottom: none;
+}
+
+.tweet-header {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.tweet-handle {
+    color: #657786;
+    font-weight: normal;
+    margin-left: 6px;
+}
+
+.tweet-text {
+    font-size: 15px;
+    margin-top: 6px;
+}
+
+.tweet-actions {
+    color: #657786;
+    font-size: 13px;
+    margin-top: 8px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+def render_twitter_thread(thread_text):
+    tweets = [t.strip() for t in thread_text.split("\n") if t.strip()]
+
+    html = '<div class="twitter-card">'
+    html += '<div class="tweet-header">ThreadGhost ✨<span class="tweet-handle">@threadghost</span></div>'
+
+    for tweet in tweets:
+        html += f'''
+        <div class="tweet">
+            <div class="tweet-text">{tweet}</div>
+            <div class="tweet-actions">💬  🔁  ❤️  📤</div>
+        </div>
+        '''
+
+    html += '</div>'
+    return html
+st.subheader("Generated Thread (Preview)")
+st.markdown(render_twitter_thread(output), unsafe_allow_html=True)
+
+
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
 st.set_page_config(page_title="Twitter/X Thread Ghostwriter", layout="centered")
@@ -95,5 +163,6 @@ Write the Twitter thread now:
 
             st.subheader("Generated Thread")
             st.markdown(output)
+
 
 
