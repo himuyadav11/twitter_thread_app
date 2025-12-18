@@ -65,8 +65,6 @@ def render_twitter_thread(thread_text):
 
     html += '</div>'
     return html
-st.subheader("Generated Thread (Preview)")
-st.markdown(render_twitter_thread(output), unsafe_allow_html=True)
 
 
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
@@ -161,8 +159,9 @@ Write the Twitter thread now:
 
             output = completion.choices[0].message.content
 
-            st.subheader("Generated Thread")
-            st.markdown(output)
+            st.subheader("Generated Thread (Preview)")
+            st.markdown(render_twitter_thread(output), unsafe_allow_html=True)
+
 
 
 
