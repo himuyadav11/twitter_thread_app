@@ -1,6 +1,10 @@
 import streamlit as st
 from groq import Groq
 import os
+client = Groq(api_key=os.environ["GROQ_API_KEY"])
+
+st.set_page_config(page_title="Twitter/X Thread Ghostwriter", layout="centered")
+
 st.markdown("""
 <style>
 body {
@@ -50,10 +54,10 @@ body {
 """, unsafe_allow_html=True)
 
 def render_twitter_thread(thread_text):
-    tweets = [t.strip() for t in thread_text.split("\n") if t.strip()]
+    tweets = [t.strip() for t in thread_text.split("\n") if t.strip().startswith(tuple("123456789"))]
 
     html = '<div class="twitter-card">'
-    html += '<div class="tweet-header">ThreadGhost ✨<span class="tweet-handle">@threadghost</span></div>'
+    html += '<div class="tweet-header">ThreadGhost ✨ <span class="tweet-handle">@threadghost</span> ✔️
 
     for tweet in tweets:
         html += f'''
@@ -66,10 +70,6 @@ def render_twitter_thread(thread_text):
     html += '</div>'
     return html
 
-
-client = Groq(api_key=os.environ["GROQ_API_KEY"])
-
-st.set_page_config(page_title="Twitter/X Thread Ghostwriter", layout="centered")
 
 st.title("🧵 Twitter/X Thread Ghostwriter")
 st.write("Generate a Twitter/X thread using GenAI.")
@@ -133,7 +133,6 @@ if generate:
 
     else:
         prompt = f"""
-{SYSTEM_PROMPT}
 Writing style:
 {STYLE_PROMPTS[style]}
 Topic: {topic}
@@ -163,5 +162,7 @@ Write the Twitter thread now:
             st.markdown(render_twitter_thread(output), unsafe_allow_html=True)
 
 
+
+st.caption("Preview only. This does not post to Twitter/X.")
 
 
