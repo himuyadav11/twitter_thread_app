@@ -57,7 +57,7 @@ def render_twitter_thread(thread_text):
     tweets = [t.strip() for t in thread_text.split("\n") if t.strip().startswith(tuple("123456789"))]
 
     html = '<div class="twitter-card">'
-    html += '<div class="tweet-header">ThreadGhost ✨ <span class="tweet-handle">@threadghost</span> ✔️
+    html += '<div class="tweet-header">ThreadGhost ✨ <span class="tweet-handle">@threadghost</span>
 
     for tweet in tweets:
         html += f'''
@@ -164,5 +164,6 @@ Write the Twitter thread now:
 
 
 st.caption("Preview only. This does not post to Twitter/X.")
+
 
 
